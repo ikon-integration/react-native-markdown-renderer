@@ -16,9 +16,13 @@ const renderRules = {
     );
   },
 
-  textgroup: (node, children, parent, styles) => {
+  textgroup: (node, children, parent, styles, index) => {
+    //
+    let style = styles.text;
+    if (typeof styles.text === 'function') style = styles.text(index);
+    //
     return (
-      <Text key={node.key} style={styles.text}>
+      <Text key={node.key} style={style}>
         {children}
       </Text>
     );

@@ -26,10 +26,7 @@ export default class AstRenderer {
    * @return {string}
    */
   getRenderFunction = type => {
-    const renderFunction = {
-      ...this._style[type],
-      ...this._renderRules[type]
-    };
+    const renderFunction = this._renderRules[type];
 
     if (!renderFunction) {
       throw new Error(
@@ -52,14 +49,20 @@ export default class AstRenderer {
     parents.unshift(node);
 
     if (node.type === "text") {
-      return renderFunction(node, [], parentNodes, this._style, optionalIndex);
+      return {
+        ...this._style[node.type],
+        ...renderFunction(node, [], parentNodes, this._style, optionalIndex),
+      };
     }
 
     const children = node.children.map((value, index) => {
       return this.renderNode(value, parents, index);
     });
 
-    return renderFunction(node, children, parentNodes, this._style, optionalIndex);
+    return {
+      ...this._style[node.type],
+      ...renderFunction(node, children, parentNodes, this._style, optionalIndex),
+    };
   };
 
   /**
