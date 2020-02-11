@@ -26,7 +26,10 @@ export default class AstRenderer {
    * @return {string}
    */
   getRenderFunction = type => {
-    const renderFunction = this._renderRules[type];
+    const renderFunction = {
+      ...this._style[type],
+      ...this._renderRules[type]
+    };
 
     if (!renderFunction) {
       throw new Error(
