@@ -56,7 +56,7 @@ export default class AstRenderer {
       return this.renderNode(value, parents, index);
     });
 
-    return renderFunction(node, children, parentNodes, this._style);
+    return renderFunction(node, children, parentNodes, this._style, optionalIndex);
   };
 
   /**
