@@ -42,18 +42,18 @@ export default class AstRenderer {
    * @param parentNodes
    * @return {*}
    */
-  renderNode = (node, parentNodes) => {
+  renderNode = (node, parentNodes, optionalIndex) => {
     const renderFunction = this.getRenderFunction(node.type);
 
     const parents = [...parentNodes];
     parents.unshift(node);
 
     if (node.type === "text") {
-      return renderFunction(node, [], parentNodes, this._style);
+      return renderFunction(node, [], parentNodes, this._style, optionalIndex);
     }
 
-    const children = node.children.map(value => {
-      return this.renderNode(value, parents);
+    const children = node.children.map((value, index) => {
+      return this.renderNode(value, parents, index);
     });
 
     return renderFunction(node, children, parentNodes, this._style);

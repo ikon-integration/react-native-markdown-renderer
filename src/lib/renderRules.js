@@ -196,29 +196,47 @@ const renderRules = {
       {children}
     </View>
   ),
-  thead: (node, children, parent, styles) => (
-    <View key={node.key} style={[styles.tableHeader]}>
-      {children}
-    </View>
-  ),
+  thead: (node, children, parent, styles, index) => {
+    //
+    let style = styles.tableHeader;
+    if (typeof styles.tableHeader === 'function') style = styles.tableHeader(index);
+    //
+    return (
+      <View key={node.key} style={[style]} >
+        {children}
+      </View >
+    );
+  },
   tbody: (node, children, parent, styles) => <View key={node.key}>{children}</View>,
-  th: (node, children, parent, styles) => {
+  th: (node, children, parent, styles, index) => {
+    //
+    let style = styles.tableHeaderCell;
+    if (typeof styles.tableHeaderCell === 'function') style = styles.tableHeaderCell(index);
+    //
     return (
-      <View key={node.key} style={[styles.tableHeaderCell]}>
+      <View key={node.key} style={[style]}>
         {children}
       </View>
     );
   },
-  tr: (node, children, parent, styles) => {
+  tr: (node, children, parent, styles, index) => {
+    //
+    let style = styles.tableRow;
+    if (typeof styles.tableRow === 'function') style = styles.tableRow(index);
+    //
     return (
-      <View key={node.key} style={[styles.tableRow]}>
+      <View key={node.key} style={[style]}>
         {children}
       </View>
     );
   },
-  td: (node, children, parent, styles) => {
+  td: (node, children, parent, styles, index) => {
+    //
+    let style = styles.tableRowCell;
+    if (typeof styles.tableRowCell === 'function') style = styles.tableRowCell(index);
+    //
     return (
-      <View key={node.key} style={[styles.tableRowCell]}>
+      <View key={node.key} style={[style]}>
         {children}
       </View>
     );
